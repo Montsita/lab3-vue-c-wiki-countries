@@ -8,6 +8,10 @@ async function obtainData() {
     const response = await fetch("https://ih-countries-api.herokuapp.com/countries");
     if (!response.ok) throw new Error("Error al obtener los datos");
     const jsonResponse = await response.json();
+    jsonResponse.sort((a, b) => {
+      // Comparar los nombres en minúsculas para evitar problemas de mayúsculas
+      return a.name.common.localeCompare(b.name.common);
+    });
     countries.value = jsonResponse;
     return jsonResponse;
   } catch (err) {
